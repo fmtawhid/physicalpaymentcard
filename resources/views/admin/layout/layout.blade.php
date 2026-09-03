@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Club Pro - Admin Dashboard</title>
+    <title>{{ $siteSettings->site_name }} - Admin Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -91,8 +91,7 @@
             <!-- Logo -->
             <div class="p-6 border-b border-gray-200">
                 <h1 class="text-xl font-bold flex items-center text-primary-700">
-                    <i class="fas fa-credit-card mr-2"></i>
-                    Task Club
+                    {{ $siteSettings->site_name }}
                 </h1>
                 <p class="text-xs text-gray-500 mt-1">{{ auth()->user()->role }} dashboard</p>
             </div>
@@ -107,31 +106,7 @@
                             Dashboard
                         </a>
                     </li>
-                    <li>
-                        <a href="{{ route('admin.project.list') }}"
-                            class="flex items-center p-3 rounded-lg {{ request()->routeIs('admin.project.*') ? 'bg-primary-50 text-primary-700 border-l-4 border-primary-700' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
-                            <i class="fas fa-exchange-alt mr-3"></i>
-                            Projects
-                        </a>
-                        <ul class="ml-6 mt-2 space-y-2">
-                            <li>
-                                <a href="{{ route('admin.project.create') }}"
-                                    class="flex items-center p-2 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900">
-                                    <i class="fas fa-plus mr-3"></i>
-                                    Add Project
-                                </a>
-                            </li>
-                        </ul>
-                        <ul class="ml-6 mt-2 space-y-2">
-                            <li>
-                                <a href="{{ route('admin.tasks.index') }}"
-                                    class="flex items-center p-2 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900">
-                                    <i class="fas fa-tasks mr-3"></i>
-                                    Manage Tasks
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+
                     <li>
                         <a href="{{ route('admin.merchant.list') }}"
                             class="flex items-center p-3 rounded-lg {{ request()->routeIs('admin.merchant.*') ? 'bg-primary-50 text-primary-700 border-l-4 border-primary-700' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
@@ -139,35 +114,30 @@
                             Merchants
                         </a>
                     </li>
-                    
+
                     <li>
-                        <a href="#"
-                            class="flex items-center p-3 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900">
-                            <i class="fas fa-shield-alt mr-3"></i>
-                            Security
+                        <a href="{{ route('admin.product.list') }}"
+                            class="flex items-center p-3 rounded-lg {{ request()->routeIs('admin.product.*') ? 'bg-primary-50 text-primary-700 border-l-4 border-primary-700' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
+                            <i class="fas fa-credit-card mr-3"></i>
+                            Products
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('admin.order.list') }}"
+                            class="flex items-center p-3 rounded-lg {{ request()->routeIs('admin.order.*') ? 'bg-primary-50 text-primary-700 border-l-4 border-primary-700' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
+                            <i class="fas fa-shopping-cart mr-3"></i>
+                            Orders
                         </a>
                     </li>
                     <li>
-                        <a href="#"
-                            class="flex items-center p-3 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900">
-                            <i class="fas fa-chart-bar mr-3"></i>
-                            Analytics
+                        <a href="{{ route('admin.settings') }}"
+                            class="flex items-center p-3 rounded-lg {{ request()->routeIs('admin.settings') ? 'bg-primary-50 text-primary-700 border-l-4 border-primary-700' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
+                            <i class="fas fa-cog mr-3"></i>
+                            Settings
                         </a>
                     </li>
-                    <li>
-                        <a href="#"
-                            class="flex items-center p-3 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900">
-                            <i class="fas fa-file-invoice-dollar mr-3"></i>
-                            Invoices
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="flex items-center p-3 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900">
-                            <i class="fas fa-question-circle mr-3"></i>
-                            Support
-                        </a>
-                    </li>
+
                 </ul>
             </nav>
 
@@ -196,31 +166,7 @@
                     </div>
 
                     <div class="flex items-center space-x-4">
-                        <!-- Notification with Dropdown -->
-                        <div class="relative hidden md:block">
-                            <button id="notificationBtn" class="relative focus:outline-none">
-                                <i class="fas fa-bell text-gray-500"></i>
-                                <span
-                                    class="absolute -top-1 -right-1 bg-primary-700 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs">3</span>
-                            </button>
-                            <!-- Notification Dropdown -->
-                            <div id="notificationDropdown"
-                                class="hidden absolute right-0 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg z-20">
-                                <ul>
-                                    <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Notification 1</li>
-                                    <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Notification 2</li>
-                                    <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Notification 3</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <!-- Search -->
-                        <div class="relative hidden md:block">
-                            <input type="text" placeholder="Search..."
-                                class="pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-700 focus:border-transparent">
-                            <i class="fas fa-search absolute left-3 top-2.5 text-gray-400"></i>
-                        </div>
-
+                        
                         <!-- Admin Dropdown -->
                         <div class="relative">
                             <button id="adminBtn" class="flex items-center space-x-2 focus:outline-none">
@@ -312,6 +258,7 @@
             }
         });
     </script>
+    @stack('scripts')
 </body>
 
 </html>

@@ -1,4 +1,4 @@
- @extends('merchant.layout.layout')
+ @extends('layouts.master')
 
 @section('content')
 <main class="flex-1 overflow-y-auto p-4 md:p-6">

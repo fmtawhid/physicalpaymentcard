@@ -80,7 +80,7 @@ public function store(Request $request)
     if ($user->role === 'admin') {
         return redirect()->route('admin.index');
     } elseif ($user->role === 'merchant') {
-        return redirect()->route('merchant.index');
+        return redirect()->intended(route('merchant.index'));
     }
 
     Auth::logout();
