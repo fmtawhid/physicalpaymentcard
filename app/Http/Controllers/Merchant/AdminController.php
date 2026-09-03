@@ -15,7 +15,7 @@ class AdminController extends Controller
             'total_orders' => Order::where('user_id', Auth::id())->count(),
             'pending_orders' => Order::where('user_id', Auth::id())->where('status', 'pending')->count(),
             'approved_orders' => Order::where('user_id', Auth::id())->where('status', 'approved')->count(),
-            'profile_status' => $merchant->verified ? 'ভেরিফায়েড' : 'ভেরিফিকেশন অপেক্ষমাণ',
+            'profile_status' => 'ভেরিফিকেশন চেক করা হয়নি',
         ];
         $recentOrders = Order::where('user_id', Auth::id())->with('product')->latest()->take(5)->get();
 

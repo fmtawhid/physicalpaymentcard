@@ -114,14 +114,6 @@
                     </select>
                 </div>
 
-                {{-- Verified --}}
-                <div class="flex items-center space-x-4">
-                    <label class="flex items-center">
-                        <input type="checkbox" name="verified" value="1" {{ $merchant->verified ? 'checked' : '' }}>
-                        <span class="ml-2 text-gray-700 font-medium">Verified</span>
-                    </label>
-                </div>
-
                 {{-- Submit --}}
                 <div>
                     <button type="submit" class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition">
