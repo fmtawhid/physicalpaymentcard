@@ -74,7 +74,7 @@
     <nav class="max-w-7xl mx-auto px-4 h-18 min-h-[72px] flex items-center justify-between">
       <a href="{{ route('home') }}" class="flex items-center gap-3">
         <div class="h-11 w-11 rounded-2xl bg-slate-950 text-white grid place-items-center font-black shadow-lg">
-          $
+          <img src="{{ asset('assets/img/logo.jpg') }}" alt="{{ $siteSettings->site_name }}">
         </div>
         <div>
           <div class="font-black tracking-tight text-lg">{{ $siteSettings->site_name }}</div>
