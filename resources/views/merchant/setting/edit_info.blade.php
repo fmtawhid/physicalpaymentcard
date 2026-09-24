@@ -35,32 +35,42 @@
                 {{-- Phone --}}
                 <div>
                     <label class="block text-gray-700 font-medium">Phone *</label>
-                    <input type="text" name="phone" class="w-full border px-3 py-2 rounded" value="{{ old('phone', $merchant->phone) }}" required>
+                    <input type="text" name="phone" class="w-full border px-3 py-2 rounded" value="{{ old('phone', $user->phone) }}" required>
                     @error('phone') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
                 </div>
 
-                {{-- Address --}}
+                {{-- Country --}}
                 <div>
-                    <label class="block text-gray-700 font-medium">Address</label>
-                    <textarea name="address" class="w-full border px-3 py-2 rounded">{{ old('address', $merchant->address) }}</textarea>
+                    <label class="block text-gray-700 font-medium">Country *</label>
+                    <select name="country" class="w-full border px-3 py-2 rounded" required>
+                        <option value="">Select country</option>
+                        @foreach(config('locations.countries') as $country)
+                            <option value="{{ $country }}" {{ old('country', $user->country) === $country ? 'selected' : '' }}>{{ $country }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                {{-- District --}}
+                <div>
+                    <label class="block text-gray-700 font-medium">District *</label>
+                    <select name="district" class="w-full border px-3 py-2 rounded" required>
+                        <option value="">Select district</option>
+                        @foreach(config('locations.districts') as $district)
+                            <option value="{{ $district }}" {{ old('district', $user->district) === $district ? 'selected' : '' }}>{{ $district }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                {{-- Delivery Address --}}
+                <div>
+                    <label class="block text-gray-700 font-medium">Delivery Address *</label>
+                    <textarea name="delivery_address" class="w-full border px-3 py-2 rounded" required>{{ old('delivery_address', $user->delivery_address) }}</textarea>
                 </div>
 
                 {{-- Store Name --}}
                 <div>
                     <label class="block text-gray-700 font-medium">Store Name</label>
                     <input type="text" name="store_name" class="w-full border px-3 py-2 rounded" value="{{ old('store_name', $merchant->store_name) }}">
-                </div>
-
-                {{-- Trade License --}}
-                <div>
-                    <label class="block text-gray-700 font-medium">Trade License</label>
-                    <input type="text" name="trade_license" class="w-full border px-3 py-2 rounded" value="{{ old('trade_license', $merchant->trade_license) }}">
-                </div>
-
-                {{-- Wallet Balance --}}
-                <div>
-                    <label class="block text-gray-700 font-medium">Wallet Balance</label>
-                    <input type="number" name="wallet_balance" class="w-full border px-3 py-2 rounded" step="0.01" value="{{ old('wallet_balance', $merchant->wallet_balance) }}">
                 </div>
 
                 {{-- Bank Info --}}

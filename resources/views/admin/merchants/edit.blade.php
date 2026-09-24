@@ -41,16 +41,6 @@
                 </div>
 
                 <div>
-                    <label class="block text-gray-700">Trade License</label>
-                    <input type="text" name="trade_license" class="w-full border px-3 py-2 rounded" value="{{ old('trade_license', $merchant->trade_license) }}">
-                </div>
-
-                <div>
-                    <label class="block text-gray-700">Wallet Balance</label>
-                    <input type="number" name="wallet_balance" class="w-full border px-3 py-2 rounded" step="0.01" value="{{ old('wallet_balance', $merchant->wallet_balance) }}">
-                </div>
-
-                <div>
                     <label class="block text-gray-700">Bank Info</label>
                     <textarea name="bank_info" class="w-full border px-3 py-2 rounded">{{ old('bank_info', $merchant->bank_info) }}</textarea>
                 </div>

@@ -32,10 +32,8 @@ class MerchantsController extends Controller
             'phone' => 'required|string|max:15',
             'address' => 'nullable|string|max:500',
             'store_name' => 'nullable|string|max:255',
-            'trade_license' => 'nullable|string|max:255',
             'status' => 'required|in:active,inactive',
             'verified' => 'boolean',
-            'wallet_balance' => 'nullable|numeric|min:0',
             'bank_info' => 'nullable|string|max:500',
             'nid_number' => 'nullable|string|max:50',
             'nid_front' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -57,6 +55,7 @@ class MerchantsController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'phone' => $request->phone,
             'password' => Hash::make($request->password),
             'role' => 'merchant',
         ]);
@@ -69,10 +68,8 @@ class MerchantsController extends Controller
             'phone' => $request->phone,
             'address' => $request->address,
             'store_name' => $request->store_name,
-            'trade_license' => $request->trade_license,
             'status' => $request->status,
             'verified' => $request->verified ?? false,
-            'wallet_balance' => $request->wallet_balance ?? 0,
             'bank_info' => $request->bank_info,
             'nid_number' => $request->nid_number,
             'nid_front' => $nidFrontName,
@@ -102,10 +99,8 @@ class MerchantsController extends Controller
             'phone' => 'required|string|max:15',
             'address' => 'nullable|string|max:500',
             'store_name' => 'nullable|string|max:255',
-            'trade_license' => 'nullable|string|max:255',
             'status' => 'required|in:active,inactive',
             'verified' => 'boolean',
-            'wallet_balance' => 'nullable|numeric|min:0',
             'bank_info' => 'nullable|string|max:500',
             'nid_number' => 'nullable|string|max:50',
             'nid_front' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -143,10 +138,8 @@ class MerchantsController extends Controller
             'phone' => $request->phone,
             'address' => $request->address,
             'store_name' => $request->store_name,
-            'trade_license' => $request->trade_license,
             'status' => $request->status,
             'verified' => $request->verified ?? false,
-            'wallet_balance' => $request->wallet_balance ?? 0,
             'bank_info' => $request->bank_info,
             'nid_number' => $request->nid_number,
             'nid_front' => $nidFrontName,
@@ -159,6 +152,7 @@ class MerchantsController extends Controller
             $user->update([
                 'name' => $request->name,
                 'email' => $request->email,
+                'phone' => $request->phone,
             ]);
         }
 

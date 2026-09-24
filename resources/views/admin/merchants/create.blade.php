@@ -55,20 +55,6 @@
                            value="{{ old('store_name') }}">
                 </div>
 
-                {{-- Trade License --}}
-                <div>
-                    <label class="block text-gray-700 mb-1">Trade License</label>
-                    <input type="text" name="trade_license" class="w-full border px-3 py-2 rounded"
-                           value="{{ old('trade_license') }}">
-                </div>
-
-                {{-- Wallet Balance --}}
-                <div>
-                    <label class="block text-gray-700 mb-1">Wallet Balance</label>
-                    <input type="number" name="wallet_balance" class="w-full border px-3 py-2 rounded"
-                           step="0.01" value="{{ old('wallet_balance') }}">
-                </div>
-
                 {{-- Bank Info (full width) --}}
                 <div class="md:col-span-3">
                     <label class="block text-gray-700 mb-1">Bank Info</label>

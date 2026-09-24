@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class SettingController extends Controller
 {
@@ -16,7 +17,7 @@ class SettingController extends Controller
         $merchant = $user->merchant()->firstOrCreate([], [
             'name' => $user->name,
             'email' => $user->email,
-            'phone' => null,
+            'phone' => $user->phone ?: '',
         ]);
 
         return view('merchant.setting.edit_info', compact('user', 'merchant'));
@@ -29,14 +30,16 @@ class SettingController extends Controller
         $merchant = $user->merchant()->firstOrCreate([], [
             'name' => $user->name,
             'email' => $user->email,
-            'phone' => null,
+            'phone' => $user->phone ?: '',
         ]);
 
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => "required|email|unique:users,email,".$user->id,
-            'phone' => 'nullable|string|max:15',
-            'address' => 'nullable|string|max:500',
+            'phone' => 'required|string|max:30',
+            'country' => ['required', Rule::in(config('locations.countries'))],
+            'district' => ['required', Rule::in(config('locations.districts'))],
+            'delivery_address' => 'required|string|max:1000',
             'nid_number' => 'nullable|string|max:50',
             'nid_front' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'nid_back' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -72,10 +75,7 @@ class SettingController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
-            'address' => $request->address,
             'store_name' => $request->store_name,
-            'trade_license' => $request->trade_license,
-            'wallet_balance' => $request->wallet_balance ?? 0,
             'bank_info' => $request->bank_info,
             'nid_number' => $request->nid_number,
             'nid_front' => $nidFrontName,
@@ -88,6 +88,10 @@ class SettingController extends Controller
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
+            'phone' => $request->phone,
+            'country' => $request->country,
+            'district' => $request->district,
+            'delivery_address' => $request->delivery_address,
         ]);
 
         return redirect()->route('merchant.settings.edit')->with('success', 'Your merchant profile has been updated successfully.');

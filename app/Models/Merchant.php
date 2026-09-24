@@ -22,10 +22,8 @@ class Merchant extends Authenticatable
         'email',
         'phone',
         'address',
-        'trade_license',
         'status',
         'verified',
-        'wallet_balance',
         'bank_info',
         'nid_number',
         'nid_front',
@@ -46,7 +44,6 @@ class Merchant extends Authenticatable
      */
     protected $casts = [
         'verified' => 'boolean',
-        'wallet_balance' => 'decimal:2',
     ];
 
     public function user()
