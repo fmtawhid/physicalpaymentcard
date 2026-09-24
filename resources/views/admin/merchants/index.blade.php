@@ -1,65 +1,22 @@
 @extends('admin.layout.layout')
 
 @section('content')
-<main class="flex-1 overflow-y-auto p-6 bg-gray-50">
-    <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold text-gray-800">Merchants List</h2>
-        <a href="{{ route('admin.merchant.create') }}" 
-           class="px-6 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow-md transition duration-300">
-            Add Merchant
-        </a>
-    </div>
+<main class="flex-1 overflow-y-auto bg-gray-50 p-4 md:p-6">
+    <div class="mx-auto max-w-7xl">
+        <div class="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-end"><div><p class="text-xs font-bold uppercase tracking-wider text-primary-700">Directory</p><h2 class="mt-1 text-2xl font-bold text-gray-800">Merchants List</h2><p class="mt-1 text-sm text-gray-500">Search and manage merchant accounts.</p></div><a href="{{ route('admin.merchant.create') }}" class="rounded-lg bg-green-600 px-6 py-2.5 font-semibold text-white shadow-md hover:bg-green-700">Add Merchant</a></div>
 
-    <div class="bg-white shadow-lg rounded-xl overflow-hidden">
-        <table class="min-w-full table-auto divide-y divide-gray-200">
-            <thead class="bg-gray-100">
-                <tr>
-                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">#</th>
-                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Name</th>
-                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Email</th>
-                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Phone</th>
-                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Status</th>
-                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Verified</th>
-                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Actions</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-                @foreach($merchants as $index => $merchant)
-                <tr class="hover:bg-gray-50 transition duration-150">
-                    <td class="px-6 py-4 text-sm text-gray-700">{{ $index + 1 }}</td>
-                    <td class="px-6 py-4 text-sm text-gray-700 font-medium">{{ $merchant->name }}</td>
-                    <td class="px-6 py-4 text-sm text-gray-500">{{ $merchant->email }}</td>
-                    <td class="px-6 py-4 text-sm text-gray-500">{{ $merchant->phone }}</td>
-                    <td class="px-6 py-4">
-                        <span class="px-3 py-1 rounded-full text-xs font-semibold 
-                            {{ $merchant->status == 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                            {{ ucfirst($merchant->status) }}
-                        </span>
-                    </td>
-                    <td class="px-6 py-4">
-                        <span class="px-3 py-1 rounded-full text-xs font-semibold 
-                            {{ $merchant->verified ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800' }}">
-                            {{ $merchant->verified ? 'Yes' : 'No' }}
-                        </span>
-                    </td>
-                    <td class="px-6 py-4 flex space-x-2">
-                        <a href="{{ route('admin.merchant.edit', $merchant->id) }}" 
-                           class="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white text-sm rounded-md transition duration-300">
-                           Edit
-                        </a>
-                        <form method="POST" action="{{ route('admin.merchant.destroy', $merchant->id) }}">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" onclick="return confirm('Are you sure?')" 
-                                    class="px-3 py-1 bg-red-500 hover:bg-red-600 text-white text-sm rounded-md transition duration-300">
-                                Delete
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+        <form method="GET" action="{{ route('admin.merchant.list') }}" class="mb-6 rounded-xl bg-white p-4 shadow-sm">
+            <div class="grid gap-3 md:grid-cols-[minmax(0,1fr)_180px_180px_auto_auto]"><input type="search" name="search" value="{{ request('search') }}" placeholder="Search name, email, phone, store or NID" class="rounded-lg border border-gray-200 px-3 py-2.5 text-sm outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100"><select name="status" class="rounded-lg border border-gray-200 px-3 py-2.5 text-sm"><option value="">All statuses</option><option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>Active</option><option value="inactive" {{ request('status') === 'inactive' ? 'selected' : '' }}>Inactive</option></select><select name="verified" class="rounded-lg border border-gray-200 px-3 py-2.5 text-sm"><option value="">All verification</option><option value="1" {{ request('verified') === '1' ? 'selected' : '' }}>Verified</option><option value="0" {{ request('verified') === '0' ? 'selected' : '' }}>Unverified</option></select><button class="rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-bold text-white hover:bg-primary-800">Search</button><a href="{{ route('admin.merchant.list') }}" class="rounded-lg border border-gray-200 px-5 py-2.5 text-center text-sm font-bold text-gray-600 hover:bg-gray-50">Reset</a></div>
+        </form>
+
+        <div class="overflow-x-auto rounded-xl bg-white shadow-lg"><table class="min-w-full divide-y divide-gray-200"><thead class="bg-gray-100"><tr><th class="px-5 py-3 text-left text-xs font-bold uppercase text-gray-600">#</th><th class="px-5 py-3 text-left text-xs font-bold uppercase text-gray-600">Name</th><th class="px-5 py-3 text-left text-xs font-bold uppercase text-gray-600">Email</th><th class="px-5 py-3 text-left text-xs font-bold uppercase text-gray-600">Phone</th><th class="px-5 py-3 text-left text-xs font-bold uppercase text-gray-600">Status</th><th class="px-5 py-3 text-left text-xs font-bold uppercase text-gray-600">Verified</th><th class="px-5 py-3 text-left text-xs font-bold uppercase text-gray-600">Actions</th></tr></thead><tbody class="divide-y divide-gray-200">
+            @forelse($merchants as $merchant)
+                <tr class="hover:bg-gray-50"><td class="px-5 py-4 text-sm text-gray-500">{{ $merchants->firstItem() + $loop->index }}</td><td class="px-5 py-4 text-sm font-semibold text-gray-800">{{ $merchant->name }}@if($merchant->store_name)<div class="text-xs font-normal text-gray-500">{{ $merchant->store_name }}</div>@endif</td><td class="px-5 py-4 text-sm text-gray-500">{{ $merchant->email }}</td><td class="px-5 py-4 text-sm text-gray-500">{{ $merchant->phone }}</td><td class="px-5 py-4"><span class="rounded-full px-3 py-1 text-xs font-semibold {{ $merchant->status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">{{ ucfirst($merchant->status) }}</span></td><td class="px-5 py-4"><span class="rounded-full px-3 py-1 text-xs font-semibold {{ $merchant->verified ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800' }}">{{ $merchant->verified ? 'Yes' : 'No' }}</span></td><td class="px-5 py-4"><div class="flex gap-2"><a href="{{ route('admin.merchant.edit', $merchant->id) }}" class="rounded bg-blue-500 px-3 py-1.5 text-sm text-white hover:bg-blue-600">Edit</a><form method="POST" action="{{ route('admin.merchant.destroy', $merchant->id) }}">@csrf @method('DELETE')<button type="submit" onclick="return confirm('Are you sure?')" class="rounded bg-red-500 px-3 py-1.5 text-sm text-white hover:bg-red-600">Delete</button></form></div></td></tr>
+            @empty
+                <tr><td colspan="7" class="px-5 py-14 text-center text-sm text-gray-500">No merchants matched your filters.</td></tr>
+            @endforelse
+        </tbody></table></div>
+        <div class="mt-5">{{ $merchants->links() }}</div>
     </div>
 </main>
 @endsection

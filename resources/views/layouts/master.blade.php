@@ -48,6 +48,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
     .pulse-dot { animation: pulseDot 1.8s infinite; }
+    .language-option.active { background: #0f172a; color: #fff; }
     @keyframes pulseDot {
       0%, 100% { box-shadow: 0 0 0 0 rgba(16,185,129,.35); }
       50% { box-shadow: 0 0 0 8px rgba(16,185,129,0); }
@@ -120,6 +121,11 @@
         @endauth
       </div>
 
+      <div class="hidden lg:flex items-center rounded-xl border border-slate-200 bg-white p-1 text-xs font-black" aria-label="Language selector">
+        <button type="button" data-language="bn" class="language-option rounded-lg px-2.5 py-2">বাংলা</button>
+        <button type="button" data-language="en" class="language-option rounded-lg px-2.5 py-2">English</button>
+      </div>
+
       <button type="button" onclick="toggleMobileMenu()" aria-controls="mobileMenu" aria-expanded="false" class="lg:hidden inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700" aria-label="Open navigation menu">
         <span class="text-2xl leading-none">☰</span>
       </button>
@@ -135,6 +141,7 @@
         <a href="{{ route('home') }}#support" onclick="closeMobileMenu()" class="rounded-xl px-4 py-3 hover:bg-slate-50">যোগাযোগ</a>
       </div>
       <div class="mt-3 border-t border-slate-100 pt-3">
+        <div class="mb-3 flex items-center justify-between rounded-xl bg-slate-50 px-3 py-2 text-xs font-black"><span>Language</span><div class="flex rounded-lg border border-slate-200 bg-white p-1"><button type="button" data-language="bn" class="language-option rounded-md px-2 py-1">বাংলা</button><button type="button" data-language="en" class="language-option rounded-md px-2 py-1">English</button></div></div>
         @auth
         @if(auth()->user()->role === 'admin')
           <a href="{{ route('admin.index') }}" onclick="closeMobileMenu()" class="block rounded-xl bg-slate-950 px-4 py-3 text-sm font-bold text-white hover:bg-slate-800">Dashboard</a>
@@ -230,6 +237,50 @@
       menu.classList.toggle('hidden', isOpen);
       button.setAttribute('aria-expanded', String(!isOpen));
     }
+
+    const interfaceTranslations = {
+      'হোম': 'Home', 'সুবিধা': 'Features', 'কার্ড অর্ডার': 'Order card', 'প্রক্রিয়া': 'How it works', 'জিজ্ঞাসা': 'FAQ', 'যোগাযোগ': 'Support',
+      'লগইন': 'Log in', 'রেজিস্টার': 'Register', 'প্রোফাইল': 'Profile', 'কীভাবে কাজ করে': 'How it works', 'সাধারণ প্রশ্ন': 'FAQ',
+      'কার্ড অর্ডার করুন': 'Order your card', 'বিস্তারিত দেখুন': 'Explore details', 'ভার্চুয়াল কার্ড অর্ডার চালু আছে': 'Virtual card orders are open',
+      'অনলাইন পেমেন্টের জন্য': 'For online payments', 'আপনার ভার্চুয়াল কার্ড।': 'Your virtual card.',
+      'কয়েক মিনিটের মধ্যে একটি নিরাপদ ভার্চুয়াল Mastercard নিন। অনলাইন শপিং, সাবস্ক্রিপশন ও আন্তর্জাতিক পেমেন্ট এখন আরও সহজ।': 'Get a secure virtual Mastercard in minutes. Online shopping, subscriptions and international payments are now easier.',
+      '✓ দ্রুত ডেলিভারি': '✓ Fast delivery', '✓ নিরাপদ পেমেন্ট': '✓ Secure payments', '✓ ২৪/৭ সাপোর্ট': '✓ 24/7 support',
+      'কেন payoneercard': 'Why payoneercard', 'আপনার অনলাইন পেমেন্ট আরও সহজ হোক।': 'Make online payments easier.',
+      'একটি কার্ডেই অনলাইন কেনাকাটা, সফটওয়্যার সাবস্ক্রিপশন এবং আন্তর্জাতিক সার্ভিসের পেমেন্ট করুন।': 'Use one card for online shopping, software subscriptions and international services.',
+      'দ্রুত অ্যাক্টিভেশন': 'Fast activation', 'আন্তর্জাতিক পেমেন্ট': 'International payments', 'বিশ্বস্ত সাপোর্ট': 'Trusted support',
+      'কার্ড প্যাকেজ': 'Card packages', 'আপনার পছন্দের কার্ড আজই নিন।': 'Choose your card today.', 'কোনো পণ্য বর্তমানে উপলভ্য নেই।': 'No products are currently available.',
+      'Active': 'Active', 'এই কার্ডটি অর্ডার করুন →': 'Order this card →', 'মাত্র তিনটি ধাপে কার্ড নিন': 'Get your card in three steps',
+      'অর্ডার পাঠান': 'Place your order', 'পেমেন্ট নিশ্চিত করুন': 'Confirm payment', 'কার্ড ব্যবহার করুন': 'Use your card',
+      'আপনার যা জানা দরকার': 'What you need to know', 'সহায়তা দরকার?': 'Need help?', 'আমাদের টিম আপনার পাশে আছে।': 'Our team is here for you.',
+      'অর্ডার বা কার্ড ব্যবহার নিয়ে যেকোনো প্রশ্নে যোগাযোগ করুন।': 'Contact us with any question about your order or card.', 'ইমেইল করুন': 'Email us',
+      'অর্ডার ফর্ম': 'Order form', 'পরিশোধযোগ্য': 'Total due', 'পণ্যের তালিকায় ফিরুন': 'Back to products', 'Payment করুন এই account-এ': 'Make payment to this account',
+      'আপনার তথ্য': 'Your details', 'আপনার নাম *': 'Full name *', 'ইমেইল *': 'Email *', 'মোবাইল নম্বর *': 'Phone number *', 'Payment details': 'Payment details', 'পেমেন্ট মাধ্যম *': 'Payment method *', 'নির্বাচন করুন': 'Select one',
+      'যে নম্বর/অ্যাকাউন্ট থেকে পেমেন্ট করেছেন *': 'Payment number or account *', 'Delivery Address *': 'Delivery address *', 'পেমেন্ট স্লিপ *': 'Payment slip *', 'অর্ডার জমা দিন': 'Submit order',
+      'এই account-এ payment করুন': 'Pay to this account', 'পরিশোধযোগ্য': 'Total due', 'অর্ডার জমা হয়েছে।': 'Order submitted.',
+      'Privacy Policy': 'Privacy Policy', 'সেবার শর্তাবলী': 'Terms of service', 'রিফান্ড নীতি': 'Refund policy',
+      'নিরাপদে ব্যবহার করুন • কার্ডের তথ্য গোপন রাখুন': 'Use safely • Keep your card details private'
+    };
+
+    const reverseTranslations = Object.fromEntries(Object.entries(interfaceTranslations).map(([bangla, english]) => [english, bangla]));
+
+    function setLanguage(language) {
+      const dictionary = language === 'en' ? interfaceTranslations : reverseTranslations;
+      document.documentElement.lang = language;
+      document.querySelectorAll('.language-option').forEach((option) => option.classList.toggle('active', option.dataset.language === language));
+      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      const textNodes = [];
+      while (walker.nextNode()) textNodes.push(walker.currentNode);
+      textNodes.forEach((node) => {
+        if (node.parentElement.closest('script, style, [data-language]')) return;
+        const value = node.nodeValue;
+        const trimmed = value.trim();
+        if (dictionary[trimmed]) node.nodeValue = value.replace(trimmed, dictionary[trimmed]);
+      });
+      localStorage.setItem('site-language', language);
+    }
+
+    document.querySelectorAll('.language-option').forEach((option) => option.addEventListener('click', () => setLanguage(option.dataset.language)));
+    setLanguage(localStorage.getItem('site-language') || 'bn');
 
   </script>
 </body>

@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('site_settings', function (Blueprint $table) {
             $table->id();
-            $table->string('site_name')->default('DollarXcard');
+            $table->string('site_name')->default('payoneercard');
             $table->string('site_email')->nullable();
             $table->string('support_phone')->nullable();
             $table->string('whatsapp_number')->nullable();

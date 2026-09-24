@@ -9,9 +9,23 @@ use Illuminate\Support\Facades\File;
 
 class ProductsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::orderBy('sort_order')->orderByDesc('id')->get();
+        $search = trim((string) $request->input('search'));
+        $status = $request->input('status');
+
+        $products = Product::when($search !== '', function ($query) use ($search) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('name', 'like', "%{$search}%")
+                        ->orWhere('description', 'like', "%{$search}%")
+                        ->orWhere('features', 'like', "%{$search}%");
+                });
+            })
+            ->when(in_array($status, ['active', 'inactive'], true), fn ($query) => $query->where('status', $status))
+            ->orderBy('sort_order')
+            ->orderByDesc('id')
+            ->paginate(15)
+            ->withQueryString();
 
         return view('admin.products.index', compact('products'));
     }

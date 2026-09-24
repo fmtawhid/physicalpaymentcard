@@ -17,7 +17,7 @@ class SiteSetting extends Model
     public static function current(): self
     {
         return static::firstOrCreate(['id' => 1], [
-            'site_name' => 'DollarXcard',
+            'site_name' => 'payoneercard',
             'site_email' => 'support@example.com',
             'order_processing_time' => '৫–১৫ মিনিট',
         ]);

@@ -4,16 +4,39 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
 class OrdersController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::with(['user', 'product'])->latest()->paginate(15);
+        $search = trim((string) $request->input('search'));
+        $status = $request->input('status');
+        $productId = $request->input('product_id');
+        $paymentMethod = $request->input('payment_method');
 
-        return view('admin.orders.index', compact('orders'));
+        $orders = Order::with(['user', 'product'])
+            ->when($search !== '', function ($query) use ($search) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('id', is_numeric($search) ? (int) $search : -1)
+                        ->orWhere('customer_name', 'like', "%{$search}%")
+                        ->orWhere('customer_email', 'like', "%{$search}%")
+                        ->orWhere('customer_phone', 'like', "%{$search}%")
+                        ->orWhere('payment_number', 'like', "%{$search}%");
+                });
+            })
+            ->when(in_array($status, ['pending', 'approved', 'rejected'], true), fn ($query) => $query->where('status', $status))
+            ->when($productId !== null && $productId !== '', fn ($query) => $query->where('product_id', $productId))
+            ->when(in_array($paymentMethod, ['bKash', 'Nagad', 'Rocket', 'Bank Transfer'], true), fn ($query) => $query->where('payment_method', $paymentMethod))
+            ->latest()
+            ->paginate(15)
+            ->withQueryString();
+
+        $products = Product::orderBy('name')->get(['id', 'name']);
+
+        return view('admin.orders.index', compact('orders', 'products'));
     }
 
     public function edit(Order $order)

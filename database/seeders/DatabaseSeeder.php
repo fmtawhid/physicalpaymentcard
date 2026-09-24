@@ -93,7 +93,7 @@ class DatabaseSeeder extends Seeder
                 'sort_order' => 7,
             ],
             [
-                'name' => 'DollarXcard Premium',
+                'name' => 'payoneercard Premium',
                 'description' => 'বেশি সুবিধা ও priority support সহ আমাদের premium virtual Mastercard package।',
                 'price' => 25,
                 'currency' => 'BDT',

@@ -15,7 +15,7 @@
                 <h1 class="mt-3 text-3xl font-black leading-tight">আপনার তথ্য সম্পূর্ণ করুন</h1>
                 <p class="mt-3 text-sm leading-6 text-orange-100/70">সঠিক পরিচয় ও delivery তথ্য থাকলে আপনার virtual card order দ্রুত যাচাই করা যাবে।</p>
                 <div class="mt-12 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-300 p-5 text-slate-950 shadow-xl">
-                    <div class="flex items-start justify-between"><span class="text-2xl font-black tracking-[-.08em]">dollarX</span><span class="grid h-10 w-10 place-items-center rounded-full bg-white/30 text-xl font-black">$</span></div>
+                    <div class="flex items-start justify-between"><span class="text-2xl font-black tracking-[-.08em]">payoneer</span><span class="grid h-10 w-10 place-items-center rounded-full bg-white/30 text-xl font-black">$</span></div>
                     <div class="mt-10 h-9 w-12 rounded-lg bg-gradient-to-br from-yellow-100 to-orange-200"></div>
                     <p class="mt-7 font-mono text-lg tracking-[.2em]">•••• 4821</p>
                     <div class="mt-5 flex justify-between text-[10px] font-bold uppercase tracking-widest text-slate-900/60"><span>Virtual Card</span><span>Secure</span></div>

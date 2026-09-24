@@ -23,7 +23,7 @@
             <div class="field"><label for="password">Password *</label><input id="password" type="password" name="password" required autocomplete="new-password"></div>
             <div class="field"><label for="password_confirmation">Confirm password *</label><input id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password"></div>
         </div>
-        <button class="auth-submit" type="submit">Create DollarXcard account</button>
+        <button class="auth-submit" type="submit">Create payoneercard account</button>
     </form>
     <div class="auth-footer"><span>Already registered?</span><a href="{{ route('login') }}">Sign in to your account</a></div>
 </x-guest-layout>

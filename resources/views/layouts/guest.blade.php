@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'DollarXcard') }}</title>
+    <title>{{ config('app.name', 'payoneercard') }}</title>
     <style>
         :root { --ink: #17100d; --muted: #756a66; --orange: #f26b2b; --gold: #ffc875; --line: #eadfda; --paper: #fff; }
         * { box-sizing: border-box; }
@@ -58,7 +58,7 @@
     </style>
 </head>
 <body>
-    @php($brandName = isset($siteSettings) && $siteSettings->site_name ? $siteSettings->site_name : config('app.name', 'DollarXcard'))
+    @php($brandName = isset($siteSettings) && $siteSettings->site_name ? $siteSettings->site_name : config('app.name', 'payoneercard'))
     <main class="auth-shell">
         <aside class="auth-art">
             <a href="{{ route('home') }}" class="auth-brand">
@@ -66,7 +66,7 @@
                 <span><strong>{{ $brandName }}</strong><small>Virtual Mastercard</small></span>
             </a>
             <div class="auth-copy"><h1>Payments with a point of view.</h1><p>One secure account for your virtual card, international payments and a smoother checkout.</p></div>
-            <div class="auth-card"><div class="card-top"><span class="card-name">dollarX</span><span class="card-dollar">$</span></div><div class="card-chip"></div><div class="card-number">•••• 4821</div><div class="card-bottom"><span>Virtual Mastercard</span><span>12/30</span></div></div>
+            <div class="auth-card"><div class="card-top"><span class="card-name">payoneer</span><span class="card-dollar">$</span></div><div class="card-chip"></div><div class="card-number">•••• 4821</div><div class="card-bottom"><span>Virtual Mastercard</span><span>12/30</span></div></div>
         </aside>
         <section class="auth-panel"><div class="auth-box"><a href="{{ route('home') }}" class="auth-mobile-brand"><span class="brand-mark"><img src="{{ asset('assets/img/logo.jpg') }}" alt="{{ $brandName }}"></span><span><strong>{{ $brandName }}</strong><small>Virtual Mastercard</small></span></a>{{ $slot }}</div></section>
     </main>

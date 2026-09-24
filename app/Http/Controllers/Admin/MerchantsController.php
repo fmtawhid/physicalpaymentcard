@@ -11,9 +11,28 @@ use Illuminate\Support\Facades\Hash;
 class MerchantsController extends Controller
 {
     // ✅ Index / List
-    public function index()
+    public function index(Request $request)
     {
-        $merchants = Merchant::with('user')->get();
+        $search = trim((string) $request->input('search'));
+        $status = $request->input('status');
+        $verified = $request->input('verified');
+
+        $merchants = Merchant::with('user')
+            ->when($search !== '', function ($query) use ($search) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('name', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%")
+                        ->orWhere('phone', 'like', "%{$search}%")
+                        ->orWhere('store_name', 'like', "%{$search}%")
+                        ->orWhere('nid_number', 'like', "%{$search}%");
+                });
+            })
+            ->when(in_array($status, ['active', 'inactive'], true), fn ($query) => $query->where('status', $status))
+            ->when($verified !== null && $verified !== '', fn ($query) => $query->where('verified', (bool) $verified))
+            ->latest()
+            ->paginate(15)
+            ->withQueryString();
+
         return view('admin.merchants.index', compact('merchants'));
     }
 
