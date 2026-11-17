@@ -39,6 +39,7 @@ class ProductsController extends Controller
     {
         $data = $this->validatedData($request);
         $data['image'] = $this->uploadImage($request);
+        $data['logo'] = $this->uploadImage($request, 'logo');
 
         Product::create($data);
 
@@ -57,6 +58,12 @@ class ProductsController extends Controller
         $product = Product::findOrFail($id);
         $data = $this->validatedData($request);
 
+        if ($request->hasFile('logo')) {
+            $logo = $this->uploadImage($request, 'logo');
+            $this->deleteImage($product->logo);
+            $data['logo'] = $logo;
+        }
+
         if ($request->hasFile('image')) {
             $this->deleteImage($product->image);
             $data['image'] = $this->uploadImage($request);
@@ -71,6 +78,7 @@ class ProductsController extends Controller
     {
         $product = Product::findOrFail($id);
         $this->deleteImage($product->image);
+        $this->deleteImage($product->logo);
         $product->delete();
 
         return redirect()->route('admin.product.list')->with('success', 'Product deleted successfully.');
@@ -86,20 +94,21 @@ class ProductsController extends Controller
             'delivery_time' => 'nullable|string|max:100',
             'features' => 'nullable|string|max:2000',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'status' => 'required|in:active,inactive',
             'sort_order' => 'nullable|integer|min:0',
         ]);
     }
 
-    private function uploadImage(Request $request): ?string
+    private function uploadImage(Request $request, string $field = 'image'): ?string
     {
-        if (!$request->hasFile('image')) {
+        if (!$request->hasFile($field)) {
             return null;
         }
 
         $directory = public_path('uploads/products');
         File::ensureDirectoryExists($directory);
-        $image = $request->file('image');
+        $image = $request->file($field);
         $name = time().'_'.uniqid().'.'.$image->extension();
         $image->move($directory, $name);
 

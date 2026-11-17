@@ -3,7 +3,7 @@
 @section('content')
 <main class="min-h-screen bg-slate-50 py-12">
     <div class="mx-auto max-w-3xl px-4">
-        <a href="{{ route('orders.index') }}" class="text-sm font-bold text-emerald-700">← আমার অর্ডারে ফিরুন</a>
+        <a href="{{ route('orders.index') }}" class="text-sm font-bold text-emerald-700">← Back to my orders</a>
 
         <div class="mt-5 rounded-3xl bg-white p-6 shadow-xl sm:p-8">
             <div class="flex flex-col justify-between gap-4 border-b border-slate-100 pb-6 sm:flex-row">
@@ -17,16 +17,16 @@
             </div>
 
             <div class="mt-6 grid gap-4 text-sm sm:grid-cols-2">
-                <div><span class="text-slate-500">পেমেন্ট মাধ্যম</span><strong class="mt-1 block">{{ $order->payment_method }}</strong></div>
-                <div><span class="text-slate-500">পেমেন্ট নম্বর</span><strong class="mt-1 block">{{ $order->payment_number }}</strong></div>
+                <div><span class="text-slate-500">Payment method</span><strong class="mt-1 block">{{ $order->payment_method }}</strong></div>
+                <div><span class="text-slate-500">Payment number</span><strong class="mt-1 block">{{ $order->payment_number }}</strong></div>
                 <div><span class="text-slate-500">Amount</span><strong class="mt-1 block">{{ $order->product?->currency ?? 'USD' }} {{ number_format((float) $order->amount, 2) }}</strong></div>
                 <div><span class="text-slate-500">Submitted</span><strong class="mt-1 block">{{ $order->created_at->format('d M Y, h:i A') }}</strong></div>
             </div>
 
             @if($order->status === 'approved')
                 <div class="mt-7 rounded-2xl border border-emerald-200 bg-emerald-50 p-5">
-                    <h2 class="text-lg font-black text-emerald-900">আপনার Card Information</h2>
-                    <p class="mt-1 text-sm text-emerald-800">Admin কর্তৃক approve করা তথ্য নিচে দেওয়া হলো।</p>
+                    <h2 class="text-lg font-black text-emerald-900">Your card information</h2>
+                    <p class="mt-1 text-sm text-emerald-800">The approved information from the admin is shown below.</p>
 
                     @if($order->card_info_name)
                         <div class="mt-5">
@@ -42,12 +42,12 @@
             @elseif($order->status === 'rejected')
                 <div class="mt-7 rounded-2xl bg-red-50 p-5 text-red-800">
                     <h2 class="font-black">Order rejected</h2>
-                    <p class="mt-1 text-sm">{{ $order->admin_note ?: 'Admin আপনার order approve করেনি। Support-এর সঙ্গে যোগাযোগ করুন।' }}</p>
+                    <p class="mt-1 text-sm">{{ $order->admin_note ?: 'The admin did not approve your order. Please contact support.' }}</p>
                 </div>
             @else
                 <div class="mt-7 rounded-2xl bg-amber-50 p-5 text-amber-800">
-                    <h2 class="font-black">Order যাচাই হচ্ছে</h2>
-                    <p class="mt-1 text-sm">Payment slip যাচাই শেষ হলে এই page-এ card information দেখা যাবে।</p>
+                    <h2 class="font-black">Order under review</h2>
+                    <p class="mt-1 text-sm">Once the payment slip is verified, the card information will appear on this page.</p>
                 </div>
             @endif
         </div>

@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Validation\ValidationException;
 
 class OrdersController extends Controller
 {
@@ -48,7 +50,7 @@ class OrdersController extends Controller
 
     public function update(Request $request, Order $order)
     {
-        $data = $request->validate([
+        $rules = [
             'status' => 'required|in:pending,approved,rejected',
             'card_info_name' => 'nullable|string|max:255',
             'card_number' => 'nullable|string|max:32',
@@ -57,9 +59,46 @@ class OrdersController extends Controller
             'card_cvv' => 'nullable|string|max:10',
             'card_info_note' => 'nullable|string|max:5000',
             'admin_note' => 'nullable|string|max:2000',
-        ]);
+        ];
 
-        $order->update($data);
+        if ($order->balance_credited_at) {
+            $rules['additional_balance_credit'] = 'nullable|numeric|decimal:0,2|min:0|max:9999999999.99';
+            $rules['balance_credit'] = 'prohibited';
+        } else {
+            $rules['balance_credit'] = 'required|numeric|decimal:0,2|min:0|max:9999999999.99';
+            $rules['additional_balance_credit'] = 'prohibited';
+        }
+
+        $data = $request->validate($rules);
+
+        DB::transaction(function () use ($data, $order) {
+            $lockedOrder = Order::query()->lockForUpdate()->findOrFail($order->id);
+
+            if ($lockedOrder->balance_credited_at) {
+                $additionalCredit = $data['additional_balance_credit'] ?? '0.00';
+                unset($data['additional_balance_credit'], $data['balance_credit']);
+
+                if ((float) $additionalCredit > 0 && $data['status'] !== 'approved') {
+                    throw ValidationException::withMessages([
+                        'additional_balance_credit' => 'The order must be approved before adding more balance.',
+                    ]);
+                }
+
+                if ((float) $additionalCredit > 0) {
+                    $lockedOrder->user()->lockForUpdate()->firstOrFail()
+                        ->increment('balance', $additionalCredit);
+                    $lockedOrder->increment('balance_credit', $additionalCredit);
+                }
+            } else {
+                if ($data['status'] === 'approved') {
+                    $lockedOrder->user()->lockForUpdate()->firstOrFail()
+                        ->increment('balance', $data['balance_credit']);
+                    $data['balance_credited_at'] = now();
+                }
+            }
+
+            $lockedOrder->update($data);
+        });
 
         return redirect()->route('admin.order.list')->with('success', 'Order updated successfully.');
     }

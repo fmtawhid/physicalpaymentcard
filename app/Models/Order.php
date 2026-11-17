@@ -21,6 +21,8 @@ class Order extends Model
         'payment_method',
         'payment_number',
         'amount',
+        'balance_credit',
+        'balance_credited_at',
         'payment_slip',
         'status',
         'card_info_name',
@@ -34,7 +36,11 @@ class Order extends Model
 
     protected function casts(): array
     {
-        return ['amount' => 'decimal:2'];
+        return [
+            'amount' => 'decimal:2',
+            'balance_credit' => 'decimal:2',
+            'balance_credited_at' => 'datetime',
+        ];
     }
 
     public function user()

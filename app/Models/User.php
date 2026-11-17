@@ -24,6 +24,7 @@ class User extends Authenticatable
         'country',
         'district',
         'delivery_address',
+        'balance',
         'password',
         'role',
     ];
@@ -48,6 +49,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'balance' => 'decimal:2',
         ];
     }
     public function merchant()

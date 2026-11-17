@@ -17,6 +17,7 @@ class Product extends Model
         'delivery_time',
         'features',
         'image',
+        'logo',
         'status',
         'sort_order',
     ];

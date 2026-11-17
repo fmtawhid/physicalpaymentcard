@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ $siteSettings->site_name }} - ভার্চুয়াল Mastercard</title>
+  <title>{{ $siteSettings->site_name }} - Virtual Mastercard</title>
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -58,15 +58,14 @@
 
 <body class="font-sans">
 
-  <!-- Announcement -->
   <div class="bg-slate-950 text-white text-sm">
     <div class="max-w-7xl mx-auto px-4 py-2.5 flex flex-col sm:flex-row items-center justify-center gap-2 text-center">
       <span class="inline-flex items-center gap-2">
         <span class="h-2 w-2 rounded-full bg-emerald-400 pulse-dot"></span>
-        ভার্চুয়াল কার্ড ডেলিভারি: সাধারণত {{ $siteSettings->order_processing_time ?: '৫–১৫ মিনিট' }}
+        Virtual card delivery: usually {{ $siteSettings->order_processing_time ?: '5–15 minutes' }}
       </span>
       <span class="hidden sm:inline text-slate-500">•</span>
-      <a href="{{ route('home') }}#support" class="text-emerald-300 hover:text-emerald-200">সহায়তা দরকার? যোগাযোগ করুন</a>
+      <a href="{{ route('home') }}#support" class="text-emerald-300 hover:text-emerald-200">Need help? Contact us</a>
     </div>
   </div>
 
@@ -84,12 +83,12 @@
       </a>
 
       <div class="hidden lg:flex items-center gap-7 text-sm font-semibold text-slate-600">
-        <a href="{{ route('home') }}#home" class="hover:text-slate-950">হোম</a>
-        <a href="{{ route('home') }}#features" class="hover:text-slate-950">সুবিধা</a>
-        <a href="{{ route('home') }}#order" class="hover:text-slate-950">কার্ড অর্ডার</a>
-        <a href="{{ route('home') }}#steps" class="hover:text-slate-950">প্রক্রিয়া</a>
-        <a href="{{ route('home') }}#faq" class="hover:text-slate-950">জিজ্ঞাসা</a>
-        <a href="{{ route('home') }}#support" class="hover:text-slate-950">যোগাযোগ</a>
+        <a href="{{ route('home') }}#home" class="hover:text-slate-950">Home</a>
+        <a href="{{ route('home') }}#features" class="hover:text-slate-950">Features</a>
+        <a href="{{ route('home') }}#order" class="hover:text-slate-950">Order Card</a>
+        <a href="{{ route('home') }}#steps" class="hover:text-slate-950">How it works</a>
+        <a href="{{ route('home') }}#faq" class="hover:text-slate-950">FAQ</a>
+        <a href="{{ route('home') }}#support" class="hover:text-slate-950">Support</a>
       </div>
 
       <div class="hidden lg:flex items-center gap-2">
@@ -113,17 +112,17 @@
         @endif
         @else
         <a href="{{ route('login') }}" class="inline-flex px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-sm font-bold hover:bg-slate-50">
-          লগইন
+          Login
         </a>
         <a href="{{ route('register') }}" class="inline-flex px-4 py-2.5 rounded-xl border border-emerald-200 bg-emerald-50 text-emerald-700 text-sm font-bold hover:bg-emerald-100">
-          রেজিস্টার
+          Register
         </a>
         @endauth
       </div>
 
       <div class="hidden lg:flex items-center rounded-xl border border-slate-200 bg-white p-1 text-xs font-black" aria-label="Language selector">
+        <button type="button" data-language="en" class="language-option rounded-lg px-2.5 py-2 active">English</button>
         <button type="button" data-language="bn" class="language-option rounded-lg px-2.5 py-2">বাংলা</button>
-        <button type="button" data-language="en" class="language-option rounded-lg px-2.5 py-2">English</button>
       </div>
 
       <button type="button" onclick="toggleMobileMenu()" aria-controls="mobileMenu" aria-expanded="false" class="lg:hidden inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700" aria-label="Open navigation menu">
@@ -133,15 +132,15 @@
 
     <div id="mobileMenu" class="hidden border-t border-slate-200/70 bg-white/95 px-4 pb-4 pt-3 shadow-lg lg:hidden">
       <div class="flex flex-col gap-1 text-sm font-semibold text-slate-700">
-        <a href="{{ route('home') }}#home" onclick="closeMobileMenu()" class="rounded-xl px-4 py-3 hover:bg-slate-50">হোম</a>
-        <a href="{{ route('home') }}#features" onclick="closeMobileMenu()" class="rounded-xl px-4 py-3 hover:bg-slate-50">সুবিধা</a>
-        <a href="{{ route('home') }}#order" onclick="closeMobileMenu()" class="rounded-xl px-4 py-3 hover:bg-slate-50">কার্ড অর্ডার</a>
-        <a href="{{ route('home') }}#steps" onclick="closeMobileMenu()" class="rounded-xl px-4 py-3 hover:bg-slate-50">প্রক্রিয়া</a>
-        <a href="{{ route('home') }}#faq" onclick="closeMobileMenu()" class="rounded-xl px-4 py-3 hover:bg-slate-50">জিজ্ঞাসা</a>
-        <a href="{{ route('home') }}#support" onclick="closeMobileMenu()" class="rounded-xl px-4 py-3 hover:bg-slate-50">যোগাযোগ</a>
+        <a href="{{ route('home') }}#home" onclick="closeMobileMenu()" class="rounded-xl px-4 py-3 hover:bg-slate-50">Home</a>
+        <a href="{{ route('home') }}#features" onclick="closeMobileMenu()" class="rounded-xl px-4 py-3 hover:bg-slate-50">Features</a>
+        <a href="{{ route('home') }}#order" onclick="closeMobileMenu()" class="rounded-xl px-4 py-3 hover:bg-slate-50">Order Card</a>
+        <a href="{{ route('home') }}#steps" onclick="closeMobileMenu()" class="rounded-xl px-4 py-3 hover:bg-slate-50">How it works</a>
+        <a href="{{ route('home') }}#faq" onclick="closeMobileMenu()" class="rounded-xl px-4 py-3 hover:bg-slate-50">FAQ</a>
+        <a href="{{ route('home') }}#support" onclick="closeMobileMenu()" class="rounded-xl px-4 py-3 hover:bg-slate-50">Support</a>
       </div>
       <div class="mt-3 border-t border-slate-100 pt-3">
-        <div class="mb-3 flex items-center justify-between rounded-xl bg-slate-50 px-3 py-2 text-xs font-black"><span>Language</span><div class="flex rounded-lg border border-slate-200 bg-white p-1"><button type="button" data-language="bn" class="language-option rounded-md px-2 py-1">বাংলা</button><button type="button" data-language="en" class="language-option rounded-md px-2 py-1">English</button></div></div>
+        <div class="mb-3 flex items-center justify-between rounded-xl bg-slate-50 px-3 py-2 text-xs font-black"><span>Language</span><div class="flex rounded-lg border border-slate-200 bg-white p-1"><button type="button" data-language="en" class="language-option rounded-md px-2 py-1 active">English</button><button type="button" data-language="bn" class="language-option rounded-md px-2 py-1">বাংলা</button></div></div>
         @auth
         @if(auth()->user()->role === 'admin')
           <a href="{{ route('admin.index') }}" onclick="closeMobileMenu()" class="block rounded-xl bg-slate-950 px-4 py-3 text-sm font-bold text-white hover:bg-slate-800">Dashboard</a>
@@ -154,11 +153,11 @@
         @endif
         <form method="POST" action="{{ route('logout') }}">@csrf<button type="submit" class="w-full rounded-xl bg-slate-950 px-4 py-3 text-sm font-bold text-white hover:bg-slate-800">Logout</button></form>
         @else
-        <a href="{{ route('login') }}" class="rounded-xl border border-slate-200 bg-white px-4 py-3 text-center text-sm font-bold text-slate-700 hover:bg-slate-50">লগইন</a>
-        <a href="{{ route('register') }}" class="rounded-xl bg-emerald-600 px-4 py-3 text-center text-sm font-bold text-white hover:bg-emerald-700">রেজিস্টার</a>
+        <a href="{{ route('login') }}" class="rounded-xl border border-slate-200 bg-white px-4 py-3 text-center text-sm font-bold text-slate-700 hover:bg-slate-50">Login</a>
+        <a href="{{ route('register') }}" class="rounded-xl bg-emerald-600 px-4 py-3 text-center text-sm font-bold text-white hover:bg-emerald-700">Register</a>
         @endauth
       </div>
-      <a href="#order" onclick="closeMobileMenu()" class="mt-2 block rounded-xl bg-slate-950 px-4 py-3 text-center text-sm font-bold text-white hover:bg-slate-800">কার্ড অর্ডার করুন</a>
+      <a href="#order" onclick="closeMobileMenu()" class="mt-2 block rounded-xl bg-slate-950 px-4 py-3 text-center text-sm font-bold text-white hover:bg-slate-800">Order your card</a>
     </div>
   </header>
 @yield('content')
@@ -171,30 +170,30 @@
         <div class="md:col-span-2">
           <div class="text-white font-black text-xl">{{ $siteSettings->site_name }}</div>
           <p class="mt-3 max-w-md leading-7 text-sm">
-            {{ $siteSettings->support_text ?: 'অনলাইন পেমেন্টের জন্য দ্রুত ও নিরাপদ ভার্চুয়াল Mastercard পাওয়ার সহজ ঠিকানা।' }}
+            {{ $siteSettings->support_text ?: 'Fast and secure access to your virtual Mastercard for online payments.' }}
           </p>
         </div>
         <div>
           <div class="text-white font-bold mb-3">Quick Links</div>
           <div class="space-y-2 text-sm">
-            <a href="{{ route('home') }}#order" class="block hover:text-white">কার্ড অর্ডার</a>
-            <a href="{{ route('home') }}#steps" class="block hover:text-white">কীভাবে কাজ করে</a>
-            <a href="{{ route('home') }}#faq" class="block hover:text-white">সাধারণ প্রশ্ন</a>
+            <a href="{{ route('home') }}#order" class="block hover:text-white">Order Card</a>
+            <a href="{{ route('home') }}#steps" class="block hover:text-white">How it works</a>
+            <a href="{{ route('home') }}#faq" class="block hover:text-white">FAQ</a>
           </div>
         </div>
         <div>
           <div class="text-white font-bold mb-3">Legal</div>
           <div class="space-y-2 text-sm">
-            <a href="{{ route('legal.privacy') }}" class="block hover:text-white">গোপনীয়তা নীতি</a>
-            <a href="{{ route('legal.terms') }}" class="block hover:text-white">সেবার শর্তাবলী</a>
-            <a href="{{ route('legal.refund') }}" class="block hover:text-white">রিফান্ড নীতি</a>
+            <a href="{{ route('legal.privacy') }}" class="block hover:text-white">Privacy Policy</a>
+            <a href="{{ route('legal.terms') }}" class="block hover:text-white">Terms of Service</a>
+            <a href="{{ route('legal.refund') }}" class="block hover:text-white">Refund Policy</a>
           </div>
         </div>
       </div>
 
       <div class="border-t border-white/10 mt-10 pt-6 flex flex-col sm:flex-row justify-between gap-3 text-xs">
-        <span>© ২০২৬ {{ $siteSettings->site_name }}. সর্বস্বত্ব সংরক্ষিত।</span>
-        <span>নিরাপদে ব্যবহার করুন • কার্ডের তথ্য গোপন রাখুন</span>
+        <span>© 2026 {{ $siteSettings->site_name }}. All rights reserved.</span>
+        <span>Use safely • Keep your card details private</span>
       </div>
     </div>
   </footer>
@@ -280,7 +279,7 @@
     }
 
     document.querySelectorAll('.language-option').forEach((option) => option.addEventListener('click', () => setLanguage(option.dataset.language)));
-    setLanguage(localStorage.getItem('site-language') || 'bn');
+    setLanguage(localStorage.getItem('site-language') || 'en');
 
   </script>
 </body>
